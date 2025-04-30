@@ -4,8 +4,7 @@ const Header = ({headers}) => {
   return (
     <h1>{headers}</h1>
   )
- }
-
+}
 
 const Button = (props) => {
   return (
@@ -15,50 +14,30 @@ const Button = (props) => {
   )
 }
 
-const DisplayGood = (props) => {
+const Display = (props) => {
   return (
-    <div>good {props.good}</div>
+    <div>{props.text} {props.good} {props.neutral} {props.bad}</div>
   )
 }
 
-const DisplayNeutral = (props) => {
-  return (
-    <div>neutral {props.neutral}</div>
-  )
-}
-
-const DisplayBad = (props) => {
-  return (
-    <div>bad {props.bad}</div>
-  )
-}
 
 
 const App = () => {
   // otsikot
   const headers = ['give feedback', 'statistics']
   
-  // tallenna napit omaan tilaansa
+  // tallenna napit omaan hook
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
 
-  console.log(good, neutral, bad)
-
-  // tapahtuman käsittelijä
-
-  const handleClick = () => {
-    console.log('clicked')
-  }
-
-      //<Header header={header} />
   return (
     <div>
       <Header headers={headers[0]} />
-      <Button
-        onClick={() => setGood(good + 1)}
-        text = 'good'
-        />
+      <Button 
+      onClick={() => setGood(good + 1)} 
+      text = 'good'
+      />
       <Button
         onClick={() => setNeutral(neutral + 1)}
         text = 'neutral'
@@ -68,11 +47,9 @@ const App = () => {
         text = 'bad'
         />
       <Header headers={headers[1]} />
-      <DisplayGood good={good} />
-      <DisplayNeutral neutral={neutral} />
-      <DisplayBad bad={bad} />
-
-
+      <Display text={'good'} good={good} />
+      <Display text={'neutral'} neutral={neutral} />
+      <Display text={'bad'} bad={bad} />
     </div>
   )
 }
