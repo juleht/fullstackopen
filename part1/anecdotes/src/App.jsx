@@ -1,6 +1,9 @@
 import { useState } from 'react'
 
 
+const Button = ({ onClick, text }) => <button onClick={onClick}>{text}</button>
+
+
 
 const App = () => {
   const anecdotes = [
@@ -13,19 +16,19 @@ const App = () => {
     'Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when dianosing patients.',
     'The only way to go fast, is to go well.'
   ]
-   
+
   const [selected, setSelected] = useState(0)
 
-  function getRandomInt(max) {
-    return Math.floor(Math.random() * max)
-  }
-  console.log(getRandomInt(8))
+  const handleNextAnecdote = () => {setSelected(Math.floor(Math.random() * anecdotes.length))}
 
   return (
     <div>
-      {anecdotes[selected]}
+      <p>{anecdotes[selected]}</p>
+      <Button onClick={handleNextAnecdote} text='next anecdote' />
     </div>
   )
 }
 
 export default App
+
+// eli ensin pitää miettiä miten random luku 
