@@ -33,7 +33,7 @@ const Statistics = ({ feedback }) => {
           <StatisticsLine text='bad' value={feedback.bad} />
           <StatisticsLine text='all' value={all} />
           <StatisticsLine text='average' value={average.toFixed(1)} />
-          <StatisticsLine text='positive' value={positive.toFixed(1)} unit='%'/>
+          <StatisticsLine text='positive' value={positive.toFixed(1)} unit='%' />
         </tbody>
       </table>
     )
