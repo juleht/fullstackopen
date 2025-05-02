@@ -19,16 +19,24 @@ const App = () => {
 
   const [selected, setSelected] = useState(0)
 
-  const handleNextAnecdote = () => {setSelected(Math.floor(Math.random() * anecdotes.length))}
+  const handleNextAnecdote = () => { setSelected(Math.floor(Math.random() * anecdotes.length)) }
+
+
+  const [allVotes, setVotes] = useState(new Array(anecdotes.length).fill(0))
+
+  const handleVote = () => {
+    const updateVotes = [...allVotes]
+    updateVotes[selected] += 1
+    setVotes(updateVotes)
+  }
 
   return (
     <div>
       <p>{anecdotes[selected]}</p>
       <Button onClick={handleNextAnecdote} text='next anecdote' />
+      <Button onClick={handleVote} text='vote' />
     </div>
   )
 }
 
 export default App
-
-// eli ensin pitää miettiä miten random luku 
