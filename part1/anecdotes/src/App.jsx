@@ -8,6 +8,7 @@ const Header = ({ header }) => <h1>{header}</h1>
 const ShowAnecdote = ({ anecdotes, index }) => <p>{anecdotes[index]}</p>
 
 
+
 const App = () => {
   const anecdotes = [
     'If it hurts, do it more often.',
@@ -30,7 +31,14 @@ const App = () => {
     updateVotes[selected] += 1
     setVotes(updateVotes)
   }
+  console.log(allVotes)
+  console.log(allVotes.indexOf(Math.max.apply(Math, allVotes)))
+  allVotes
   const mostVoted = allVotes.indexOf(Math.max.apply(Math, allVotes))
+
+
+
+
 
   return (
     <div>
