@@ -18,10 +18,15 @@ const App = (props) => {
     const personObject = {
       name: newName
     }
-    setPersons(persons.concat(personObject))
-    setNewName('')
+    if (persons.some((x) => x.name === newName)) {
+      alert(`${newName} is already added to phonebook`)
+    } else {
+      setPersons(persons.concat(personObject))
+      setNewName('')
+    }
     console.log('button clicked', event.target)
   }
+
 
   const handleAddNewPerson = (event) => {
     console.log('button clikked', event.target.value)
