@@ -1,11 +1,7 @@
 import { useState } from 'react'
-
-
-const Person = ({ person }) => {
-  return (
-    <ul>{person.name} {person.number}</ul>
-  )
-}
+import PersonToShow from './components/Person'
+import { Header } from './components/Parts'
+import { FilterFrom, SubmitForm } from './components/Form'
 
 const App = (props) => {
   const [persons, setPersons] = useState([
@@ -50,35 +46,16 @@ const App = (props) => {
   }
   return (
     <div>
-      <h2>Phonebook</h2>
-      <form>
-        <div>
-          filter shown with <input value={showPerson} onChange={handleShowhPerson}/>
-        </div>
-      </form>
-      <h2>add a new</h2>
-      <form onSubmit={addPerson}>
-        <div>
-          name: <input value={newName} onChange={handleAddNewPerson} />
-        </div>
-        <div>
-          number: <input value={newNumber} onChange={handleAddNewNumber} />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
-      <h2>Numbers</h2>
-      <ul>
-        {personsToShow.map(person =>
-          <Person key={person.name} person={person} />
-        )}
-      </ul>
+      <Header header={'Phonebook'} />
+      <FilterFrom value={showPerson} onChange={handleShowhPerson} />
+      <Header header={'add a new'} />
+      <SubmitForm addPerson={addPerson} newName={newName} handleAddNewPerson={handleAddNewPerson} newNumber={newNumber} handleAddNewNumber={handleAddNewNumber} />
+      <Header header={'Numbers'} />
+      <PersonToShow personsToShow={personsToShow} />
       <div>debug: {newName}</div>
     </div>
 
   )
 
 }
-
 export default App
