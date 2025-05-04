@@ -7,15 +7,6 @@ const Person = ({ person }) => {
   )
 }
 
-const Button = ({ onClick, text }) => <button onClick={onClick}>{text}</button>
-
-
-// Tee lomakkeeseen hakukenttä, jonka avulla näytettävien nimien listaa voidaan rajata:
-// Rajausehdon syöttämisen voi hoitaa omana lomakkeeseen kuulumattomana input-elementtinä.
-// Kuvassa rajausehdosta on tehty case-insensitiivinen eli ehto arto löytää isolla kirjaimella kirjoitetun Arton.
-
-
-
 const App = (props) => {
   const [persons, setPersons] = useState([
     { name: 'Arto Hellas', number: '040-123456' },
@@ -25,7 +16,8 @@ const App = (props) => {
   ])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
-  // const [showAll, setShowAll] = useState(true)
+  const [showPerson, setShowPerson] = useState('')
+  const personsToShow = persons.filter(person => new RegExp(showPerson, 'i').test(person.name))
 
   const addPerson = (event) => {
     event.preventDefault()
@@ -53,20 +45,9 @@ const App = (props) => {
     setNewNumber(event.target.value)
   }
 
-
-  // Tee lomakkeeseen hakukenttä, jonka avulla näytettävien nimien listaa voidaan rajata:
-  // Rajausehdon syöttämisen voi hoitaa omana lomakkeeseen kuulumattomana input-elementtinä.
-  // Kuvassa rajausehdosta on tehty case-insensitiivinen eli ehto arto löytää isolla kirjaimella kirjoitetun Arton.
-
-
-  const [showPerson, setShowPerson] = useState('')
-
   const handleShowhPerson = (event) => {
     setShowPerson(event.target.value)
   }
-  
-  const personsToShow = persons.filter(person => new RegExp(showPerson, 'i').test(person.name))
-
   return (
     <div>
       <h2>Phonebook</h2>
