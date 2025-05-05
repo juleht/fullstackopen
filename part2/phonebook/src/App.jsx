@@ -1,4 +1,4 @@
-import { useState, useEffect} from 'react'
+import { useState, useEffect } from 'react'
 import PersonToShow from './components/Person'
 import { Header } from './components/Parts'
 import { FilterFrom, SubmitForm } from './components/Form'
@@ -14,28 +14,11 @@ const App = (props) => {
 
   useEffect(() => {
     axios
-    .get('http://localhost:3001/persons')
-    .then(response => {
-      setPersons(response.data)
-    })
+      .get('http://localhost:3001/persons')
+      .then(response => {
+        setPersons(response.data)
+      })
   }, [])
-
-  //const addPerson = (event) => {
-  //  event.preventDefault()
-  //  const personObject = {
-  //    name: newName,
-  //    number: newNumber,
-  //  }
-  //  if (persons.some((x) => x.name === newName)) {
-  //    alert(`${newName} is already added to phonebook`)
-  //  } else {
-  //    setPersons(persons.concat(personObject))
-  //    setNewName('')
-  //    setNewNumber('')
-  //  }
-  //  console.log('button clicked', event.target)
-  //}
-
 
   const addPerson = (event) => {
     event.preventDefault()
@@ -47,13 +30,13 @@ const App = (props) => {
       alert(`${newName} is already added to phonebook`)
     } else {
       axios
-      .post('http://localhost:3001/persons', personObject)
-      .then(response => {
-        console.log(response)
-        setPersons(persons.concat(personObject))
-        setNewName('')
-        setNewNumber('')
-      })
+        .post('http://localhost:3001/persons', personObject)
+        .then(response => {
+          console.log(response)
+          setPersons(persons.concat(personObject))
+          setNewName('')
+          setNewNumber('')
+        })
     }
     console.log('button clicked', event.target)
   }
