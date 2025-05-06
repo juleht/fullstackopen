@@ -1,10 +1,8 @@
 import { useState, useEffect } from 'react'
-import PersonToShow from './components/Person'
-import { Header } from './components/Parts'
-import { FilterFrom, SubmitForm } from './components/Form'
-import axios from 'axios'
+import parts from './components/Parts'
+import forms from './components/Form'
 import personService from './services/persons'
- 
+
 const App = (props) => {
   const [persons, setPersons] = useState([])
 
@@ -15,10 +13,10 @@ const App = (props) => {
 
   useEffect(() => {
     personService
-    .getAll()
-    .then(response => {
-      setPersons(response.data)
-    })
+      .getAll()
+      .then(response => {
+        setPersons(response.data)
+      })
   }, [])
 
   const addPerson = (event) => {
@@ -31,39 +29,54 @@ const App = (props) => {
       alert(`${newName} is already added to phonebook`)
     } else {
       personService
-      .create(personObject)
-      .then(response => {
-        console.log(response)
-        setPersons(persons.concat(personObject))
-        setNewName('')
-        setNewNumber('')
-      })
+        .create(personObject)
+        .then(response => {
+          console.log(response)
+          setPersons(persons.concat(response.data))
+          setNewName('')
+          setNewNumber('')
+        })
     }
     console.log('button clicked', event.target)
   }
 
+  /// lisää delete person
+  const handleDelete = (id) => {
+    console.log('delete', id)
+    personService
+      .deleteOne(id)
+      .then(() => {
+        console.log()
+        setPersons(persons.filter(person => person.id !== id))
+      })
+
+  }
+
+
+
 
   const handleAddNewPerson = (event) => {
-    console.log('button clikked', event.target.value)
+    console.log('handleAddNewPerson', event.target.value)
     setNewName(event.target.value)
   }
 
   const handleAddNewNumber = (event) => {
-    console.log('button clikked', event.target.value)
+    console.log('handleAddNewNumber', event.target.value)
     setNewNumber(event.target.value)
   }
 
-  const handleShowhPerson = (event) => {
+  const handleShowPerson = (event) => {
+    console.log('handleShowPerson', event.target.value)
     setShowPerson(event.target.value)
   }
   return (
     <div>
-      <Header header={'Phonebook'} />
-      <FilterFrom value={showPerson} onChange={handleShowhPerson} />
-      <Header header={'add a new'} />
-      <SubmitForm addPerson={addPerson} newName={newName} handleAddNewPerson={handleAddNewPerson} newNumber={newNumber} handleAddNewNumber={handleAddNewNumber} />
-      <Header header={'Numbers'} />
-      <PersonToShow personsToShow={personsToShow} />
+      <parts.Header header={'Phonebook'} />
+      <forms.FilterFrom value={showPerson} onChange={handleShowPerson} />
+      <parts.Header header={'add a new'} />
+      <forms.SubmitForm addPerson={addPerson} newName={newName} handleAddNewPerson={handleAddNewPerson} newNumber={newNumber} handleAddNewNumber={handleAddNewNumber} />
+      <parts.Header header={'Numbers'} />
+      <forms.PersonForm personsToShow={personsToShow} handleDelete={handleDelete}/>
       <div>debug: {newName}</div>
     </div>
 
@@ -71,3 +84,28 @@ const App = (props) => {
 
 }
 export default App
+
+
+//       <PersonToShow personsToShow={personsToShow} />
+
+//<div>
+//<div>
+//  {personsToShow.map(person =>
+//  <div key={person.id}>
+//  {person.name} {person.number} <button onClick={() => handleDelete(person.id)}>delete</button>
+//  </div>
+//  )}
+//</div>
+//</div>
+
+//<div>
+//<div>
+//  {personsToShow.map(person =>
+//    <div key={person.id}>
+//      {person.name} {person.number} <button onClick={() => handleDelete(person.id)}>delete</button>
+//    </div>
+//  )}
+//</div>
+//</div>
+//<div>debug: {newName}</div>
+//</div>

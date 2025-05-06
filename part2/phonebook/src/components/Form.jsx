@@ -1,10 +1,26 @@
-import { Button, Input } from "./Parts";
+import parts from './Parts'
 
+const PersonForm = ({ personsToShow, handleDelete }) => {
+    return (
+        <div>
+            {personsToShow.map(person =>
+                <div key={person.id}>
+                    <span>
+                        <parts.Person person={person} />
+                    </span>
+                    <span>
+                        <parts.Button type={'button'} text={'delete'} onClick={() => handleDelete(person.id)} />
+                    </span>
+                </div>
+            )}
+        </div>
+    )
+}
 
 const FilterFrom = ({ onChange, showPerson }) => {
     return (
         <form>
-            <Input text={'filter shown with'} value={showPerson} onChange={onChange} />
+            <parts.Input text={'filter shown with'} value={showPerson} onChange={onChange} />
         </form>
     )
 }
@@ -12,12 +28,11 @@ const FilterFrom = ({ onChange, showPerson }) => {
 const SubmitForm = ({ handleAddNewPerson, newName, newNumber, handleAddNewNumber, addPerson }) => {
     return (
         <form onSubmit={addPerson}>
-            <Input text={'name:'} value={newName} onChange={handleAddNewPerson} />
-            <Input text={'number:'} value={newNumber} onChange={handleAddNewNumber} />
-            <Button text={'add'} type={'submit'} />
+            <parts.Input text={'name:'} value={newName} onChange={handleAddNewPerson} />
+            <parts.Input text={'number:'} value={newNumber} onChange={handleAddNewNumber} />
+            <parts.Button text={'add'} type={'submit'} />
         </form>
     )
 }
 
-
-export { FilterFrom, SubmitForm }
+export default { FilterFrom, SubmitForm, PersonForm }

@@ -1,6 +1,6 @@
 const Person = ({ person }) => {
     return (
-        <li>{person.name} {person.number}</li>
+        <span>{person.name} {person.number}</span>
     )
 }
 
@@ -19,12 +19,12 @@ const Input = ({ text, value, onChange }) => {
     )
 }
 
-const Button = ({ type, text }) => {
+const Button = ({ type, text, onClick }) => {
     return (
-        <div>
-            <button type={type}>{text}</button>
-        </div>
+        <span>
+            <button type={type} onClick={onClick}>{text}</button>
+        </span>
     )
 }
 
-export { Person, Header, Input, Button }
+export default { Person, Header, Input, Button }

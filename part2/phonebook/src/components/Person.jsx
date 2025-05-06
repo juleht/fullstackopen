@@ -1,5 +1,7 @@
 import { Person } from "./Parts"
 
+/// poista tämä
+
 const PersonToShow = ({ personsToShow }) => {
     return (
         <ul>
