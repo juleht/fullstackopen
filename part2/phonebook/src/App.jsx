@@ -40,19 +40,16 @@ const App = (props) => {
     console.log('button clicked', event.target)
   }
 
-  /// lisää delete person
   const handleDelete = (id) => {
     console.log('delete', id)
-    personService
-      .deleteOne(id)
-      .then(() => {
-        console.log()
-        setPersons(persons.filter(person => person.id !== id))
-      })
-
-  }
-
-
+      personService
+        .deleteOne(id)
+        .then(() => {
+          console.log()
+          setPersons(persons.filter(person => person.id !== id))
+        })
+    }
+  
 
 
   const handleAddNewPerson = (event) => {
@@ -76,7 +73,7 @@ const App = (props) => {
       <parts.Header header={'add a new'} />
       <forms.SubmitForm addPerson={addPerson} newName={newName} handleAddNewPerson={handleAddNewPerson} newNumber={newNumber} handleAddNewNumber={handleAddNewNumber} />
       <parts.Header header={'Numbers'} />
-      <forms.PersonForm personsToShow={personsToShow} handleDelete={handleDelete}/>
+      <forms.PersonForm personsToShow={personsToShow} handleDelete={handleDelete} />
       <div>debug: {newName}</div>
     </div>
 
@@ -84,28 +81,3 @@ const App = (props) => {
 
 }
 export default App
-
-
-//       <PersonToShow personsToShow={personsToShow} />
-
-//<div>
-//<div>
-//  {personsToShow.map(person =>
-//  <div key={person.id}>
-//  {person.name} {person.number} <button onClick={() => handleDelete(person.id)}>delete</button>
-//  </div>
-//  )}
-//</div>
-//</div>
-
-//<div>
-//<div>
-//  {personsToShow.map(person =>
-//    <div key={person.id}>
-//      {person.name} {person.number} <button onClick={() => handleDelete(person.id)}>delete</button>
-//    </div>
-//  )}
-//</div>
-//</div>
-//<div>debug: {newName}</div>
-//</div>

@@ -9,11 +9,11 @@ const PersonForm = ({ personsToShow, handleDelete }) => {
                         <parts.Person person={person} />
                     </span>
                     <span>
-                        <parts.Button type={'button'} text={'delete'} onClick={() => handleDelete(person.id)} />
+                        <parts.Button type={'button'} text={'delete'} onClick={() => {if (window.confirm(`Delete ${person.name} ?`)) {handleDelete(person.id)}}} />
                     </span>
                 </div>
-            )}
-        </div>
+            )} 
+        </div> 
     )
 }
 
