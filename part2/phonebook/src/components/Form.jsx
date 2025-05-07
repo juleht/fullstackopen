@@ -9,11 +9,11 @@ const PersonForm = ({ personsToShow, handleDelete }) => {
                         <parts.Person person={person} />
                     </span>
                     <span>
-                        <parts.Button type={'button'} text={'delete'} onClick={() => {if (window.confirm(`Delete ${person.name} ?`)) {handleDelete(person.id)}}} />
+                        <parts.Button type={'button'} text={'delete'} onClick={() => { if (window.confirm(`Delete ${person.name} ?`)) { handleDelete(person.id) } }} />
                     </span>
                 </div>
-            )} 
-        </div> 
+            )}
+        </div>
     )
 }
 
@@ -27,7 +27,7 @@ const FilterFrom = ({ onChange, showPerson }) => {
 
 const SubmitForm = ({ handleAddNewPerson, newName, newNumber, handleAddNewNumber, addPerson }) => {
     return (
-        <form onSubmit={addPerson}>
+        <form onSubmit={addPerson} >
             <parts.Input text={'name:'} value={newName} onChange={handleAddNewPerson} />
             <parts.Input text={'number:'} value={newNumber} onChange={handleAddNewNumber} />
             <parts.Button text={'add'} type={'submit'} />
@@ -35,4 +35,6 @@ const SubmitForm = ({ handleAddNewPerson, newName, newNumber, handleAddNewNumber
     )
 }
 
+//onSubmit={() => {if (window.confirm(`${newName} is already added to phonebook, replace the old number with new one?`)) {addPerson}}}
+//onSubmit={addPerson}
 export default { FilterFrom, SubmitForm, PersonForm }

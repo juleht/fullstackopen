@@ -3,9 +3,8 @@ import parts from './components/Parts'
 import forms from './components/Form'
 import personService from './services/persons'
 
-const App = (props) => {
+const App = () => {
   const [persons, setPersons] = useState([])
-
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [showPerson, setShowPerson] = useState('')
@@ -19,14 +18,32 @@ const App = (props) => {
       })
   }, [])
 
+
   const addPerson = (event) => {
     event.preventDefault()
+
     const personObject = {
       name: newName,
       number: newNumber,
     }
+
+
+
     if (persons.some((x) => x.name === newName)) {
-      alert(`${newName} is already added to phonebook`)
+      const person = persons.find(p => p.name === newName)
+
+      if (window.confirm(`${newName} already exists. Replace old number with a new one?`)) {
+        const id = person.id
+        const changedPerson = { ...person, number: newNumber }
+
+        personService
+          .update(id, changedPerson)
+          .then(response => {
+            setPersons(persons.map(person => person.id !== id ? person : response.data))
+            setNewName('')
+            setNewNumber('')
+          })
+      }
     } else {
       personService
         .create(personObject)
@@ -42,14 +59,14 @@ const App = (props) => {
 
   const handleDelete = (id) => {
     console.log('delete', id)
-      personService
-        .deleteOne(id)
-        .then(() => {
-          console.log()
-          setPersons(persons.filter(person => person.id !== id))
-        })
-    }
-  
+    personService
+      .deleteOne(id)
+      .then(() => {
+        console.log()
+        setPersons(persons.filter(person => person.id !== id))
+      })
+  }
+
 
 
   const handleAddNewPerson = (event) => {
