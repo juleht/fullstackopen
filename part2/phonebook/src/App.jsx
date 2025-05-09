@@ -9,6 +9,7 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   const [showPerson, setShowPerson] = useState('')
   const personsToShow = persons.filter(person => new RegExp(showPerson, 'i').test(person.name))
+  const [successMessage, setSuccessMessage] = useState('testat')
 
   useEffect(() => {
     personService
@@ -37,6 +38,22 @@ const App = () => {
             setNewName('')
             setNewNumber('')
           })
+          .then(successMessage => {
+            setSuccessMessage(
+              `Changed '${person.name}' number`
+            )
+            setTimeout(() => {
+              setSuccessMessage(null)
+            }, 5000)
+          })
+          .catch(successMessage => {
+            setSuccessMessage(
+              `Failed to change '${person.name}' number`
+            )
+            setTimeout(() => {
+              setSuccessMessage(null)
+            }, 5000)
+          })
       }
     } else {
       personService
@@ -46,15 +63,52 @@ const App = () => {
           setNewName('')
           setNewNumber('')
         })
+        .then(successMessage => {
+          setSuccessMessage(
+            `created '${personObject.name}'`
+          )
+          setTimeout(() => {
+            setSuccessMessage(null)
+          }, 5000)
+        })
+        .catch(successMessage => {
+          setSuccessMessage(
+            `create to create '${personObject.name}'`
+          )
+          setTimeout(() => {
+            setSuccessMessage(null)
+          }, 5000)
+        })
+
     }
     console.log('button clicked', event.target)
   }
 
   const handleDelete = (id) => {
+    const person = persons.find(person => person.id === id)
+
     personService
       .deleteOne(id)
-      .then(returnedPerson => {
-        setPersons(persons.filter(returnedPerson => returnedPerson.id !== id))
+      .then(() => {
+        console.log('onnistui poistaa')
+        setPersons(persons.filter(person => person.id !== id))
+      })
+      .then(successMessage => {
+        setSuccessMessage(
+          `Deleted '${person.name}'`
+        )
+        setTimeout(() => {
+          setSuccessMessage(null)
+        }, 5000)
+      })
+      .catch(error => {
+        console.log('testi', person)
+        setSuccessMessage(
+          `Failed to Deleted '${person.name}' number`
+        )
+        setTimeout(() => {
+          setSuccessMessage(null)
+        }, 5000)
       })
   }
 
@@ -72,8 +126,25 @@ const App = () => {
     console.log('handleShowPerson', event.target.value)
     setShowPerson(event.target.value)
   }
+
+  const Notification = ({ message }) => {
+    if (message === null) {
+      return null
+    }
+
+    return (
+      <div className='success'>
+        {message}
+      </div>
+    )
+  }
+
+
   return (
     <div>
+      <div>
+        <Notification message={successMessage} />
+      </div>
       <parts.Header header={'Phonebook'} />
       <forms.FilterFrom value={showPerson} onChange={handleShowPerson} />
       <parts.Header header={'add a new'} />
