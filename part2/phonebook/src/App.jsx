@@ -13,33 +13,27 @@ const App = () => {
   useEffect(() => {
     personService
       .getAll()
-      .then(response => {
-        setPersons(response.data)
+      .then(initialPersons => {
+        setPersons(initialPersons)
       })
   }, [])
 
 
   const addPerson = (event) => {
     event.preventDefault()
-
     const personObject = {
       name: newName,
       number: newNumber,
     }
-
-
-
     if (persons.some((x) => x.name === newName)) {
       const person = persons.find(p => p.name === newName)
-
       if (window.confirm(`${newName} already exists. Replace old number with a new one?`)) {
         const id = person.id
         const changedPerson = { ...person, number: newNumber }
-
         personService
           .update(id, changedPerson)
-          .then(response => {
-            setPersons(persons.map(person => person.id !== id ? person : response.data))
+          .then(returnedPerson => {
+            setPersons(persons.map(person => person.id !== id ? person : returnedPerson))
             setNewName('')
             setNewNumber('')
           })
@@ -47,9 +41,8 @@ const App = () => {
     } else {
       personService
         .create(personObject)
-        .then(response => {
-          console.log(response)
-          setPersons(persons.concat(response.data))
+        .then(returnedPerson => {
+          setPersons(persons.concat(returnedPerson))
           setNewName('')
           setNewNumber('')
         })
@@ -58,16 +51,12 @@ const App = () => {
   }
 
   const handleDelete = (id) => {
-    console.log('delete', id)
     personService
       .deleteOne(id)
-      .then(() => {
-        console.log()
-        setPersons(persons.filter(person => person.id !== id))
+      .then(returnedPerson => {
+        setPersons(persons.filter(returnedPerson => returnedPerson.id !== id))
       })
   }
-
-
 
   const handleAddNewPerson = (event) => {
     console.log('handleAddNewPerson', event.target.value)
@@ -91,10 +80,7 @@ const App = () => {
       <forms.SubmitForm addPerson={addPerson} newName={newName} handleAddNewPerson={handleAddNewPerson} newNumber={newNumber} handleAddNewNumber={handleAddNewNumber} />
       <parts.Header header={'Numbers'} />
       <forms.PersonForm personsToShow={personsToShow} handleDelete={handleDelete} />
-      <div>debug: {newName}</div>
     </div>
-
   )
-
 }
 export default App
